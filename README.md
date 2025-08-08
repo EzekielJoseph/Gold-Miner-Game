@@ -1,7 +1,5 @@
-Oke, ini aku buatin langsung format **README.md** yang sudah rapi, jadi tinggal kamu copy-paste ke file `README.md` di proyek Unity kamu.
-
 ````markdown
-# 🎣 Gold Miner – Hook Movement with ESP32 Button Control
+🎣 Gold Miner – Hook Movement with ESP32 Button Control
 
 ## 📌 Deskripsi
 Proyek ini adalah implementasi **game Gold Miner** di Unity dengan sistem kontrol hook (pengait) yang dapat bergerak otomatis bolak-balik, lalu menembak ke bawah saat pemain menekan tombol.  
