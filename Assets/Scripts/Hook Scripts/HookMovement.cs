@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.IO.Ports;
 using UnityEngine;
 
 public class HookMovement : MonoBehaviour
@@ -21,6 +20,9 @@ public class HookMovement : MonoBehaviour
 
     private bool moveDown;
 
+    SerialPort serialPort = new SerialPort("COM11", 115200);
+    private string serialInput = "";
+
     // FOR LINE RENDERER
     private RopeRenderer ropeRenderer;
 
@@ -31,20 +33,66 @@ public class HookMovement : MonoBehaviour
 
     void Start()
     {
-
         initial_Y = transform.position.y;
         initial_Move_Speed = move_Speed;
 
         canRotate = true;
 
+        // Open Serial Port
+        try
+        {
+            if (!serialPort.IsOpen)
+            {
+                serialPort.Open();
+                serialPort.ReadTimeout = 50; // Set a read timeout
+                Debug.Log("Serial port opened successfully.");
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to open serial port: " + e.Message);
+        }
     }
 
     void Update()
     {
+        ReadSerialInpput();
         Rotate();
         GetInput();
         MoveRope();
     }
+
+    void ReadSerialInpput()
+    {
+        if (serialPort.IsOpen)
+        {
+            try
+            {
+                serialInput = serialPort.ReadLine();
+                if (!string.IsNullOrEmpty(serialInput))
+                {
+                    Debug.Log("Received from ESP: " + serialInput);
+                }
+            }
+            catch (System.TimeoutException)
+            {
+            }
+        }
+    }
+
+    void GetInput()
+    {
+        bool mousePressed = Input.GetMouseButton(0);
+        bool espPressed = (serialInput == "FIRE");
+
+        if ((mousePressed || espPressed) && canRotate)
+        {
+            canRotate = false;
+            moveDown = true;
+            serialInput = "";
+        }
+
+    } // get input
 
     void Rotate()
     {
@@ -56,13 +104,10 @@ public class HookMovement : MonoBehaviour
 
         if (rotate_Right)
         {
-
             rotate_Angle += rotate_Speed * Time.deltaTime;
-
         }
         else
         {
-
             rotate_Angle -= rotate_Speed * Time.deltaTime;
         }
 
@@ -70,36 +115,14 @@ public class HookMovement : MonoBehaviour
 
         if (rotate_Angle >= max_Z)
         {
-
             rotate_Right = false;
-
         }
         else if (rotate_Angle <= min_Z)
         {
-
             rotate_Right = true;
-
         }
 
     } // can rotate
-
-    void GetInput()
-    {
-
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            if (canRotate)
-            {
-                canRotate = false;
-                moveDown = true;
-
-                //SoundManager.instance.RopeStretch(true);
-            }
-
-        }
-
-    } // get input
 
     void MoveRope()
     {
@@ -111,20 +134,15 @@ public class HookMovement : MonoBehaviour
 
         if (!canRotate)
         {
-
             Vector3 temp = transform.position;
 
             if (moveDown)
             {
-
                 temp -= transform.up * Time.deltaTime * move_Speed;
-
             }
             else
             {
-
                 temp += transform.up * Time.deltaTime * move_Speed;
-
             }
 
             transform.position = temp;
@@ -136,15 +154,9 @@ public class HookMovement : MonoBehaviour
 
             if (temp.y >= initial_Y)
             {
-
                 canRotate = true;
-
                 ropeRenderer.RenderLine(temp, false);
-
                 move_Speed = initial_Move_Speed;
-
-                //SoundManager.instance.RopeStretch(false);
-
             }
 
             ropeRenderer.RenderLine(transform.position, true);
@@ -158,5 +170,27 @@ public class HookMovement : MonoBehaviour
     {
         moveDown = false;
     }
+    private void OnDestroy()
+    {
+        CloseSerialPort();
+    }
+
+    void CloseSerialPort()
+    {
+        if (serialPort != null && serialPort.IsOpen)
+        {
+            try
+            {
+                serialPort.Close();
+                Debug.Log("Serial port ditutup.");
+                System.Threading.Thread.Sleep(200); // beri waktu OS melepas port
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("Gagal menutup port: " + e.Message);
+            }
+        }
+    }
+
 
 } // class
