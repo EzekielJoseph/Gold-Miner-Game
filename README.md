@@ -1,4 +1,5 @@
 🎣 Gold Miner – Hook Movement with ESP32 Button Control
+
 📌 Deskripsi
 Proyek ini adalah implementasi game Gold Miner di Unity dengan sistem kontrol hook (pengait) yang dapat bergerak otomatis bolak-balik, lalu menembak ke bawah saat pemain menekan tombol.
 Awalnya kontrol dilakukan dengan klik mouse, kemudian diintegrasikan dengan ESP32 dan push button untuk memberikan pengalaman bermain yang lebih interaktif dengan kontrol fisik.
