@@ -1,5 +1,4 @@
-````markdown
-🎣 Gold Miner – Hook Movement with ESP32 Button Control
+# 🎣 Gold Miner – Hook Movement with ESP32 Button Control
 
 ## 📌 Deskripsi
 Proyek ini adalah implementasi **game Gold Miner** di Unity dengan sistem kontrol hook (pengait) yang dapat bergerak otomatis bolak-balik, lalu menembak ke bawah saat pemain menekan tombol.  
@@ -134,15 +133,3 @@ Push Button → 3.3V (melalui internal pull-up)
    * Tekan tombol ESP32 → hook turun.
 
 ---
-
-## 📝 Catatan
-
-* Jangan buka Arduino Serial Monitor bersamaan dengan Unity, karena port akan terkunci.
-* Delay 200 ms di `OnDestroy()` membantu Windows melepas port sebelum dibuka lagi.
-* Bisa diperluas dengan dua tombol (misalnya untuk kontrol ekstra di game).
-
-```
-
-Kalau mau, README ini bisa aku tambahkan **diagram alur gameplay** Gold Miner + **flow data** ESP32 → Unity → Hook supaya lebih visual.  
-Mau aku tambahkan sekalian diagramnya?
-```
