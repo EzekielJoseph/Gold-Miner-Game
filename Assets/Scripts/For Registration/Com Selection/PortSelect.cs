@@ -36,6 +36,7 @@ public class PortSelect : MonoBehaviour
         }
 
         dropdown.options = optiondata;
+        ValueChanged(0);
     }
 
 

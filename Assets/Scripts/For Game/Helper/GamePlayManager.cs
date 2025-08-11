@@ -14,8 +14,15 @@ public class GameplayManager : MonoBehaviour
     public int countdownTimer = 60;
     private int scoreCount;
 
-    [SerializeField]
-    private UnityEngine.UI.Image scoreFillUI;
+    public int bronzeMin = 75;
+    public int silverMin = 100;
+    public int goldMin = 125;
+    public int bronzeMax = 99;
+    public int silverMax = 124;
+
+    public string bronzeReward = "Bronze";
+    public string silverReward = "Silver";  
+    public string goldReward = "Gold";
 
     private void Awake()
     {
@@ -44,6 +51,7 @@ public class GameplayManager : MonoBehaviour
         if (countdownTimer <= 0)
         {
             StopCoroutine("Countdown");
+            ShowReward();
             StartCoroutine(RestartGame());
         }
     }
@@ -54,19 +62,37 @@ public class GameplayManager : MonoBehaviour
 
         scoreCount += scoreValue;
         scoreText.text = "$ " + scoreCount;
+    }
 
-        scoreFillUI.fillAmount = (float)scoreCount / 100f;
+    private void ShowReward()
+    {
+        string reward = GetReward();
+        Debug.Log("Final Score: " + scoreCount + "Reward: " + reward);
+    }
 
-        //if (scoreCount >= 100)
-        //{
-        //    StopCoroutine("Countdown");
-        //    StartCoroutine(RestartGame());
-        //}
+    private string GetReward()
+    {
+        if (scoreCount >= bronzeMin && scoreCount <= bronzeMax)
+        {
+            return bronzeReward;
+        }
+        else if (scoreCount >= silverMin && scoreCount <= silverMax)
+        {
+            return silverReward;
+        }
+        else if (scoreCount >= goldMin)
+        {
+            return goldReward;
+        }
+        else
+        {
+            return "Sorry, No Reward";
+        }
     }
 
     IEnumerator RestartGame()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("Main Game");
     }
 }
