@@ -1,4 +1,5 @@
 using System.IO.Ports;
+using System.Security.AccessControl;
 using UnityEngine;
 
 public class HookMovement : MonoBehaviour
@@ -20,7 +21,7 @@ public class HookMovement : MonoBehaviour
 
     private bool moveDown;
 
-    SerialPort serialPort = new SerialPort("COM11", 115200);
+    SerialPort serialPort;
     private string serialInput = "";
 
     // FOR LINE RENDERER
@@ -31,27 +32,33 @@ public class HookMovement : MonoBehaviour
         ropeRenderer = GetComponent<RopeRenderer>();
     }
 
+    public void ConnectToPort(string port)
+    {
+        serialPort = new SerialPort(UserDataManager.Instance.Port, 115200);
+        Debug.Log("Connecting to port: " + port);
+
+        if (!serialPort.IsOpen)
+        {
+            try
+            {
+                serialPort.Open();
+                Debug.Log("Serial port opened successfully.");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Failed to open serial port: " + e.Message);
+            }
+        }
+
+    }
+
     void Start()
     {
+        ConnectToPort(UserDataManager.Instance.Port);
         initial_Y = transform.position.y;
         initial_Move_Speed = move_Speed;
 
         canRotate = true;
-
-        // Open Serial Port
-        try
-        {
-            if (!serialPort.IsOpen)
-            {
-                serialPort.Open();
-                serialPort.ReadTimeout = 50; // Set a read timeout
-                Debug.Log("Serial port opened successfully.");
-            }
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Failed to open serial port: " + e.Message);
-        }
     }
 
     void Update()
