@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +16,13 @@ public class PortSelect : MonoBehaviour
 
     public void ValueChanged(int index)
     {
+
+        if (ports.Count() < 1)
+        {
+            Debug.LogWarning("No ");
+            return;
+        }
+
         Debug.Log(ports[index]);
         UserDataManager.Instance.Port = ports[index];
         Debug.Log("Selected Port: " + UserDataManager.Instance.Port);

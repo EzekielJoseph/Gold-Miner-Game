@@ -34,6 +34,12 @@ public class HookMovement : MonoBehaviour
 
     public void ConnectToPort(string port)
     {
+
+        if (string.IsNullOrEmpty(port))
+        {
+            Debug.LogWarning("No Port Is Selected");
+            return;
+        }
         serialPort = new SerialPort(UserDataManager.Instance.Port, 115200);
         Debug.Log("Connecting to port: " + port);
 
@@ -71,6 +77,11 @@ public class HookMovement : MonoBehaviour
 
     void ReadSerialInpput()
     {
+        if (serialPort == null)
+        {
+            return;
+        }
+
         if (serialPort.IsOpen)
         {
             try
