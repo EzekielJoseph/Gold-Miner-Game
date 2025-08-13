@@ -60,7 +60,7 @@ public class HookMovement : MonoBehaviour
 
     void Start()
     {
-        ConnectToPort(UserDataManager.Instance.Port);
+        //ConnectToPort(UserDataManager.Instance.Port);
         initial_Y = transform.position.y;
         initial_Move_Speed = move_Speed;
 
@@ -69,7 +69,7 @@ public class HookMovement : MonoBehaviour
 
     void Update()
     {
-        ReadSerialInpput();
+        //ReadSerialInpput();
         Rotate();
         GetInput();
         MoveRope();
