@@ -15,14 +15,16 @@ public class GameplayManager : MonoBehaviour
     public GameObject player;
     public TextMeshProUGUI rewardText;
 
-    public int countdownTimer = 60;
-    private int scoreCount;
+    public GameObject goldTrophy;
+    public GameObject silverTrophy;
+    public GameObject bronzeTrophy;
 
-    public int bronzeMin = 75;
-    public int silverMin = 100;
-    public int goldMin = 125;
-    public int bronzeMax = 99;
-    public int silverMax = 124;
+    public int countdownTimer = 60;
+    public int scoreCount;
+
+    public int bronzeLimit = 75;
+    public int silverLimit = 100;
+    public int goldLimit = 125;
 
     public string bronzeReward = "Bronze";
     public string silverReward = "Silver";  
@@ -40,6 +42,10 @@ public class GameplayManager : MonoBehaviour
     {
         if (rewardPanel != null)
             rewardPanel.SetActive(false);
+
+        goldTrophy.SetActive(false);
+        silverTrophy.SetActive(false);
+        bronzeTrophy.SetActive(false);
 
         DisplayScore(0);
         countdownText.text = countdownTimer.ToString();
@@ -94,17 +100,20 @@ public class GameplayManager : MonoBehaviour
 
     private string GetReward()
     {
-        if (scoreCount >= bronzeMin && scoreCount <= bronzeMax)
+        if (scoreCount >= goldLimit)
         {
-            return bronzeReward;
+            goldTrophy.SetActive(true);
+            return goldReward;
         }
-        else if (scoreCount >= silverMin && scoreCount <= silverMax)
+        else if (scoreCount >= silverLimit)
         {
+            silverTrophy.SetActive(true);
             return silverReward;
         }
-        else if (scoreCount >= goldMin)
+        else if (scoreCount >= bronzeLimit)
         {
-            return goldReward;
+            bronzeTrophy.SetActive(true);
+            return bronzeReward;
         }
         else
         {

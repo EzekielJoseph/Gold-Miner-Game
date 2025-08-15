@@ -3,8 +3,9 @@ using UnityEngine;
 public class HookSound : MonoBehaviour
 {
     public AudioClip catchSfx;
+    public AudioClip stoneSfx;
     private AudioSource audioSource;
-
+        
     // Daftar tag yang memicu SFX
     public string[] targetTags =
     {
@@ -36,7 +37,26 @@ public class HookSound : MonoBehaviour
             {
                 if (catchSfx != null && audioSource != null)
                 {
-                    audioSource.PlayOneShot(catchSfx);
+                    if(tag == "LargeGold")
+                    {
+                        audioSource.PlayOneShot(catchSfx);
+                    }
+                    else if(tag == "MiddleGold")
+                    {
+                        audioSource.PlayOneShot(catchSfx);
+                    }
+                    else if(tag == "SmallGold")
+                    {
+                        audioSource.PlayOneShot(catchSfx);
+                    }
+                    else if(tag == "LargeStone")
+                    {
+                        audioSource.PlayOneShot(stoneSfx);
+                    }
+                    else if(tag == "MiddleStone")
+                    {
+                        audioSource.PlayOneShot(stoneSfx);
+                    }
                 }
                 break; // Keluar loop biar nggak cek tag lain
             }
