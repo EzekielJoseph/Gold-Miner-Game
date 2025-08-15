@@ -133,3 +133,9 @@ Push Button → 3.3V (melalui internal pull-up)
    * Tekan tombol ESP32 → hook turun.
 
 ---
+
+
+## Skematik Rangkaian ESP32
+
+
+![alt text](https://github.com/EzekielJoseph/Gold-Miner-Game/blob/main/Schematic_Unity-Gold-Miner_2025-08-15.png)
