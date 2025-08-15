@@ -11,6 +11,10 @@ public class GameplayManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI countdownText;
 
+    public GameObject rewardPanel;
+    public GameObject player;
+    public TextMeshProUGUI rewardText;
+
     public int countdownTimer = 60;
     private int scoreCount;
 
@@ -34,6 +38,9 @@ public class GameplayManager : MonoBehaviour
 
     void Start()
     {
+        if (rewardPanel != null)
+            rewardPanel.SetActive(false);
+
         DisplayScore(0);
         countdownText.text = countdownTimer.ToString();
         StartCoroutine("Countdown");
@@ -67,7 +74,22 @@ public class GameplayManager : MonoBehaviour
     private void ShowReward()
     {
         string reward = GetReward();
-        Debug.Log("Final Score: " + scoreCount + "Reward: " + reward);
+        Debug.Log("Final Score: " + scoreCount + " | Reward: " + reward);
+        player.SetActive(false);
+
+        if (rewardPanel != null)
+        {
+            rewardPanel.SetActive(true);
+
+            if(rewardText != null)
+            {
+                rewardText.text = "Your Reward: " + reward;
+            }
+            else
+            {
+                Debug.LogWarning("Reward Text is not assigned in the inspector.");
+            }
+        }
     }
 
     private string GetReward()
