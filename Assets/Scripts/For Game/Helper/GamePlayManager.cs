@@ -59,7 +59,7 @@ public class GameplayManager : MonoBehaviour
         {
             StopCoroutine("Countdown");
             ShowReward();
-            StartCoroutine(RestartGame());
+            //StartCoroutine(RestartGame());
         }
     }
     public void DisplayScore(int scoreValue)
@@ -112,9 +112,19 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    IEnumerator RestartGame()
+    //IEnumerator RestartGame()
+    //{
+    //    yield return new WaitForSeconds(5f);
+    //    SceneManager.LoadScene("Main Game");
+    //}
+
+    public void OnBackToGameClick()
     {
-        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene("Main Game");
+    }
+
+    public void OnBackToRegistClick()
+    {
+        SceneManager.LoadScene("Register");
     }
 }
