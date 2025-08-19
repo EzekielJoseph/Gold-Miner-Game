@@ -30,6 +30,14 @@ public class Inputs : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+    }
+
     public void OnRegister()
     {
         string nama = namaInput.text;
@@ -53,15 +61,21 @@ public class Inputs : MonoBehaviour
         }
     }
 
-    public void onAssetClick()
+    public void OnAssetClick()
     {
         PlayClickSFX(); // Mainkan efek suara saat tombol diklik
         assetPanel.SetActive(true); // Tampilkan panel attribution
     }
 
-    public void onBackClick()
+    public void OnBackClick()
     {
         PlayClickSFX(); // Mainkan efek suara saat tombol diklik
         assetPanel.SetActive(false); // Sembunyikan panel attribution
+    }
+
+    public void OnExitClick()
+    {
+        PlayClickSFX(); // Mainkan efek suara saat tombol diklik
+        Application.Quit(); // Keluar dari aplikasi
     }
 }
